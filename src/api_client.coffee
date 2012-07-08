@@ -27,10 +27,10 @@ class APIClient extends iron_core.Client
     _.extend({}, super(), {'Authorization': "OAuth #{@options.token}"})
 
   tasks_create: (code_name, payload, options, cb) ->
-    parse_response = _.bind(@parse_response, @)
+    parse_response_bind = _.bind(@parse_response, @)
 
     @post("projects/#{@options.project_id}/tasks", {'tasks': [_.extend({'code_name': code_name, 'payload': payload}, options)]}, (error, response, body) ->
-      parse_response(error, response, body, cb)
+      parse_response_bind(error, response, body, cb)
     )
 
 module.exports.APIClient = APIClient
