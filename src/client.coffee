@@ -1,10 +1,10 @@
-api_client = require('./api_client')
+apiClient = require('./api_client')
 
 class Client
   constructor: (options) ->
-    @api = new api_client.APIClient(options)
+    @api = new apiClient.APIClient(options)
 
-  tasks_create: (code_name, params, options, cb) ->
+  tasksCreate: (codeName, params, options, cb) ->
     payload = ''
     
     if typeof(params) == 'string'
@@ -12,7 +12,7 @@ class Client
     else
       payload = JSON.stringify(params)
 
-    @api.tasks_create(code_name, payload, options, (error, body) ->
+    @api.tasksCreate(codeName, payload, options, (error, body) ->
       if not error?
         cb(error, body.tasks[0])
       else
