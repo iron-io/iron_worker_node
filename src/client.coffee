@@ -125,6 +125,17 @@ class Client
         cb(error, body)
     )
 
+  tasksWaitForLog: (taskId, options, cb) ->
+    tasksWaitForLogBind = _.bind(@tasksWaitForLog, @)
+    options.sleep ?= 5
+
+    @tasksLog(taskId, (error, body) ->
+      if error and error.message.match(/log/i)
+        _.delay(tasksWaitForLogBind, options.sleep * 1000, taskId, options, cb)
+      else
+        cb(error, body)
+    )
+
   schedulesList: (options, cb) ->
     @api.schedulesList(options, (error, body) ->
       if not error?
