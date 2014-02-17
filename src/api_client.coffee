@@ -83,6 +83,13 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb)
     )
 
+  tasksRetry: (id, delay, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @post("projects/#{@options.project_id}/tasks/#{id}/retry", {'delay': delay}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
   tasksCancel: (id, cb) ->
     parseResponseBind = _.bind(@parseResponse, @)
         

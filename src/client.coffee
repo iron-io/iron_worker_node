@@ -77,6 +77,14 @@ class Client
         cb(error, body)
     )
 
+  tasksRetry: (taskId, delay, cb) ->
+    @api.tasksRetry(taskId, delay, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
   tasksCancel: (taskId, cb) ->
     @api.tasksCancel(taskId, (error, body) ->
       if not error?
