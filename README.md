@@ -44,7 +44,7 @@ console.log("Hello Node World!");
 * Create `HelloWorld.worker` file, example:
 
 ```ruby
-runtime 'php'
+runtime 'node'
 exec 'HelloWorld.js'
 ```
 * Upload!
@@ -91,6 +91,4 @@ worker.tasksWaitFor(task_id, function (err, res) {
 You can find more documentation here:
 
 * http://dev.iron.io Full documetation for iron.io products.
-* [IronWorker PHP reference](http://iron-io.github.com/iron_worker_php/).
-* [IronWorker PHP Wiki pages](https://github.com/iron-io/iron_worker_php/wiki).
-* [IronWorker PHP Examples](https://github.com/iron-io/iron_worker_examples/tree/master/php)
+* [IronWorker Node Examples](https://github.com/iron-io/iron_worker_examples/tree/master/node)
