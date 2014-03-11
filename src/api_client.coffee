@@ -14,7 +14,7 @@ class APIClient extends ironCore.Client
       host: @AWS_US_EAST_HOST,
       port: 443,
       api_version: 2,
-      user_agent: @version
+      user_agent: @version()
 
     super('iron', 'worker', options, defaultOptions, ['project_id', 'token', 'api_version'])
 
@@ -80,6 +80,13 @@ class APIClient extends ironCore.Client
     parseResponseBind = _.bind(@parseResponse, @)
 
     @post("projects/#{@options.project_id}/tasks", {'tasks': [_.extend({'code_name': codeName, 'payload': payload}, options)]}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  tasksRetry: (id, delay, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @post("projects/#{@options.project_id}/tasks/#{id}/retry", {'delay': delay}, (error, response, body) ->
       parseResponseBind(error, response, body, cb)
     )
 
