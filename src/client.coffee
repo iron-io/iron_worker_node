@@ -64,7 +64,7 @@ class Client
 
   tasksCreate: (codeName, params, options, cb) ->
     payload = ''
-    
+
     if typeof(params) == 'string'
       payload = params
     else
@@ -119,7 +119,7 @@ class Client
 
   tasksWaitFor: (taskId, options, cb) ->
     tasksWaitForBind = _.bind(@tasksWaitFor, @)
-    
+
     sleep = options.sleep
     sleep = 5 if not sleep?
 
@@ -151,7 +151,7 @@ class Client
 
   schedulesCreate: (codeName, params, options, cb) ->
     payload = ''
-    
+
     if typeof(params) == 'string'
       payload = params
     else
@@ -171,5 +171,36 @@ class Client
       else
         cb(error, body)
     )
+
+  codesUpload: (name, destination, fileName, cb) ->
+    needle = require("needle")
+    ncp = require("ncp").ncp
+    fs = require("fs")
+    AdmZip = require("adm-zip")
+    zip = new AdmZip()
+    destination += "/"  unless destination.charAt(destination.length - 1) is "/"
+    api = @api
+    ncp.limit = 16
+    ncp "upload_files", destination, (err) ->
+      throw err  if err
+      fs.appendFile destination + "__runner__.sh", "\nnode " + fileName, (err) ->
+        throw err  if err
+        zip.addLocalFolder destination
+        params =
+          data: JSON.stringify(
+            name: name
+            file_name: "__runner__.sh"
+            runtime: "sh"
+            content_type: "text/plain"
+          )
+          file:
+            buffer: zip.toBuffer()
+            content_type: "application/zip"
+
+        api.codesUpload params, (err, body) ->
+          unless err?
+            cb err, body
+          else
+            cb err, body
 
 module.exports.Client = Client
