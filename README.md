@@ -70,27 +70,25 @@ If you need to pass some data you can use payload parameter
 
 ```javascript
 var payload = {first: 'Hello', second: 'World'};
-var task_id = worker.tasksCreate('HelloWorld', payload);
+var options = {priority: 1};
+worker.tasksCreate('HelloWorld', payload, options, function(error, body) {});
 ```
 
 ### Queueing Options
 
-```javascript
-var payload = {first: 'Hello', second: 'World'};
-var options = {priority: 1};
-var task_id = worker.tasksCreate('HelloWorld', payload, priority);
-```
-
   - **priority**: Setting the priority of your job. Valid values are 0, 1, and 2. The default is 0.
   - **timeout**: The maximum runtime of your task in seconds. No task can exceed 3600 seconds (60 minutes). The default is 3600 but can be set to a shorter duration.
   - **delay**: The number of seconds to delay before actually queuing the task. Default is 0.
+  - **label**: Optional text label for your task.
+  - **cluster**: cluster name ex: "high-mem" or "dedicated".  This is a premium feature for customers to have access to more powerful or custom built worker solutions. Dedicated worker clusters exist for users who want to reserve a set number of workers just for their queued tasks. If not set default is set to  "default" which is the public IronWorker cluster.
+
 
 ## Status of a Worker
 To get the status of a worker, you can use the ```tasksGet()``` method.
 
 ```javascript
 var task_id = worker.tasksCreate('HelloWorld');
-details = worker.tasksGet(task_id);
+worker.tasksGet(task_id, function(error, body) {});
 ```
 
 ## Get Worker Log
@@ -109,7 +107,7 @@ worker.tasksWaitFor(task_id, function (err, res) {
 Like with `tasksCreate`
 
 ```javascript
-var task_id = worker.schedulesCreate('HelloWorld', payload, {run_times: 10});
+worker.schedulesCreate('HelloWorld', payload, {run_times: 10}, function(error, body) {});
 ```
 
 ### Scheduling Options
@@ -119,6 +117,9 @@ var task_id = worker.schedulesCreate('HelloWorld', payload, {run_times: 10});
   - **run_times**: The number of times a task will run.
   - **priority**: Setting the priority of your job. Valid values are 0, 1, and 2. The default is 0. Higher values means tasks spend less time in the queue once they come off the schedule.
   - **start_at**: The time the scheduled task should first be run.
+  - **label**: Optional text label for your task.
+  - **cluster**: cluster name ex: "high-mem" or "dedicated".
+
 
 # Full Documentation
 
