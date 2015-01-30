@@ -62,6 +62,17 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb, false)
     )
 
+  codesUpload: (options, cb) ->
+    needle = require("needle")
+    parseResponseBind = _.bind(@parseResponse, this)
+    headers =
+      multipart: true
+      headers: @headers()
+    endpoint = @url() + "projects/" + @options.project_id + "/codes"
+    needle.post(endpoint, options, headers, (error, response, body) ->
+      parseResponseBind(error, response, body, cb, false)
+    )
+
   tasksList: (options, cb) ->
     parseResponseBind = _.bind(@parseResponse, @)
         
