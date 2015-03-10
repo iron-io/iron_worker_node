@@ -1,6 +1,7 @@
 _ = require('underscore')
 
 apiClient = require('./api_client')
+helper = require('./helper')
 
 class Client
   constructor: (options) ->
@@ -215,3 +216,6 @@ class Client
             cb err, body
 
 module.exports.Client = Client
+module.exports.params = helper.params
+module.exports.config = helper.config
+module.exports.taskId = helper.taskId
