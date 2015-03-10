@@ -14,7 +14,7 @@ npm install iron_worker
 
 2\. [Setup your Iron.io credentials](http://dev.iron.io/mq/reference/configuration/)
 
-3\. Create an IronMQ Client object:
+3\. Create an IronWorker Client object:
 
 ```javascript
 var iron_worker = require('iron_worker');
@@ -54,6 +54,18 @@ $ iron_worker upload HelloWorld
 ```
 
 [.worker syntax reference](http://dev.iron.io/worker/reference/dotworker/)
+
+### Parsing payload, config within running worker
+
+* Add this library to list of dependencies (`package.json`):
+* Use it:
+
+```javascript
+var iron_worker = require('iron_worker');
+console.log(iron_worker.params());
+console.log(iron_worker.config());
+console.log(iron_worker.taskId());
+```
 
 ## Worker examples
 
