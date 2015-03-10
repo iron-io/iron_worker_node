@@ -1,3 +1,5 @@
+_ = require('underscore')
+
 params = null
 task_id = null
 config = null
