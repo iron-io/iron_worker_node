@@ -148,7 +148,7 @@ class Client
   schedulesList: (options, cb) ->
     @api.schedulesList(options, (error, body) ->
       if not error?
-        cb(error, body.tasks)
+        cb(error, body.schedules)
       else
         cb(error, body)
     )
