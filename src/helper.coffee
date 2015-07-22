@@ -5,6 +5,7 @@ task_id = null
 config = null
 task_dir = null
 payload_file = null
+config_file = null
 
 parseCLIData = ->
   fs = require('fs')
