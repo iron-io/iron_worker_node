@@ -219,3 +219,4 @@ module.exports.Client = Client
 module.exports.params = helper.params
 module.exports.config = helper.config
 module.exports.taskId = helper.taskId
+module.exports.taskDir = helper.taskDir
