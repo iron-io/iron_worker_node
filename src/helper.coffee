@@ -58,3 +58,6 @@ module.exports.config = ->
   parseCLIData() if !config
   config
 
+module.exports.taskDir = ->
+  parseCLIData() if !task_dir
+  task_dir
