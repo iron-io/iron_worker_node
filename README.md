@@ -6,7 +6,7 @@ IronWorker is a massively scalable background processing system.
 # Getting Started
 
 
-1\. Install the gem:
+1\. Install the module:
 
 ```
 npm install iron_worker
