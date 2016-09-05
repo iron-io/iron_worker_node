@@ -138,4 +138,4 @@ worker.schedulesCreate('HelloWorld', payload, {run_times: 10}, function(error, b
 You can find more documentation here:
 
 * http://dev.iron.io Full documetation for iron.io products.
-* [IronWorker Node Examples](https://github.com/iron-io/iron_worker_examples/tree/master/node)
+* [IronWorker Node Examples](https://github.com/iron-io/dockerworker/tree/master/node)
