@@ -74,7 +74,10 @@ You can find plenty of good worker examples here: [iron_worker_examples](https:/
 ## Queueing a Worker
 
 ```javascript
-var task_id = worker.tasksCreate('HelloWorld');
+worker.tasksCreate('HelloWorld', {}, {}, function(err,res){
+  task_id = res.id;
+  console.log("Pushed new task: task_id = "+task_id);
+});
 ```
 Worker should start in a few seconds.
 
@@ -96,11 +99,15 @@ worker.tasksCreate('HelloWorld', payload, options, function(error, body) {});
 
 
 ## Status of a Worker
-To get the status of a worker, you can use the ```tasksGet()``` method.
+To get the status of a task and other info, you can use the ```tasksGet()``` method.
 
 ```javascript
-var task_id = worker.tasksCreate('HelloWorld');
-worker.tasksGet(task_id, function(error, body) {});
+worker.tasksCreate('HelloWorld', {}, {}, function(err,res){
+  task_id = res.id;
+  worker.tasksGet(task_id, function(error, res) {
+    console.log("Full info about the task:\n"+JSON.stringify(res));
+  });
+});
 ```
 
 ## Get Worker Log
@@ -108,10 +115,12 @@ worker.tasksGet(task_id, function(error, body) {});
 Use any function that print text inside your worker to put messages to log.
 
 ```javascript
-var task_id = worker.tasksCreate('HelloWorld');
-worker.tasksWaitFor(task_id, function (err, res) {
+worker.tasksCreate('HelloWorld', {}, {}, function(err,res){
+  task_id = res.id;
+  worker.tasksWaitForLog(task_id, {}, function (err, res) {
     worker.tasksLog(task_id, function (err, res) {console.log(res)});
-})
+  })
+});
 ```
 
 ## Scheduling a Worker
@@ -138,4 +147,4 @@ worker.schedulesCreate('HelloWorld', payload, {run_times: 10}, function(error, b
 You can find more documentation here:
 
 * http://dev.iron.io Full documetation for iron.io products.
-* [IronWorker Node Examples](https://github.com/iron-io/iron_worker_examples/tree/master/node)
+* [IronWorker Node Examples](https://github.com/iron-io/dockerworker/tree/master/node)
