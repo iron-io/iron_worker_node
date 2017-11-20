@@ -215,6 +215,62 @@ class Client
           else
             cb err, body
 
+  clustersList: (options, cb) ->
+    @api.clustersList(options, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersGet: (clusterId, cb) ->
+    @api.clustersGet(clusterId, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersStats: (clusterId, cb) ->
+    @api.clustersStats(clusterId, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersCreate: (clusterName, memory, disk, options, cb) ->
+    @api.clustersCreate(clusterName, memory, disk, options, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersUpdate: (clusterId, options, cb) ->
+    @api.clustersUpdate(clusterId, options, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersDelete: (clusterId, cb) ->
+    @api.clustersDelete(clusterId, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
+  clustersTerminate: (clusterId, instance_id, cb) ->
+    @api.clustersTerminate(clusterId, instance_id, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
 module.exports.Client = Client
 module.exports.params = helper.params
 module.exports.config = helper.config

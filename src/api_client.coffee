@@ -157,4 +157,53 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb)
     )
 
+  clustersList: (options, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @get("clusters", options, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersGet: (id, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @get("clusters/#{id}", {}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersStats: (id, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @get("clusters/#{id}/stats", {}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersCreate: (clusterName, memory, disk, options, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @post("clusters", _.extend({'name': clusterName, 'memory': memory, 'disk': disk}, options), (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersUpdate: (id, options, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @put("clusters/#{id}", options, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersDelete: (id, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @delete("clusters/#{id}", {}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
+  clustersTerminate: (id, instance_id, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @post("clusters/#{id}/terminate", {"instance_ids": [instance_id]}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb)
+    )
+
 module.exports.APIClient = APIClient
