@@ -199,7 +199,7 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb)
     )
 
-  clustersTerminate: (id, instance_id, cb) ->
+  instanceTerminate: (id, instance_id, cb) ->
     parseResponseBind = _.bind(@parseResponse, @)
 
     @post("clusters/#{id}/terminate", {"instance_ids": [instance_id]}, (error, response, body) ->

@@ -263,8 +263,8 @@ class Client
         cb(error, body)
     )
 
-  clustersTerminate: (clusterId, instance_id, cb) ->
-    @api.clustersTerminate(clusterId, instance_id, (error, body) ->
+  instanceTerminate: (clusterId, instance_id, cb) ->
+    @api.instanceTerminate(clusterId, instance_id, (error, body) ->
       if not error?
         cb(error, body)
       else
