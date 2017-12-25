@@ -122,6 +122,13 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb, false)
     )
 
+  tasksStdout: (id, cb) ->
+    parseResponseBind = _.bind(@parseResponse, @)
+
+    @get("projects/#{@options.project_id}/tasks/#{id}/outlog", {}, (error, response, body) ->
+      parseResponseBind(error, response, body, cb, false)
+    )
+
   tasksSetProgress: (id, options, cb) ->
     parseResponseBind = _.bind(@parseResponse, @)
         

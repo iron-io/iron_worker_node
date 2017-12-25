@@ -110,6 +110,14 @@ class Client
         cb(error, body)
     )
 
+  tasksStdout: (taskId, cb) ->
+    @api.tasksStdout(taskId, (error, body) ->
+      if not error?
+        cb(error, body)
+      else
+        cb(error, body)
+    )
+
   tasksSetProgress: (taskId, options, cb) ->
     @api.tasksSetProgress(taskId, options, (error, body) ->
       if not error?
@@ -121,13 +129,18 @@ class Client
   tasksWaitFor: (taskId, options, cb) ->
     tasksWaitForBind = _.bind(@tasksWaitFor, @)
 
-    sleep = options.sleep
-    sleep = 5 if not sleep?
+    options.sleep ?= 0.25
+    options.timeout ?= 3600
+    options.tries ?= Math.round((options.timeout) / 60) + 20
+    options.tries--
+    if options.tries < 0
+      return cb(new Error('Timeout waiting for task execution'), null)
 
     @tasksGet(taskId, (error, body) ->
       if not error?
-        if body.status == 'queued' or body.status == 'running'
-          _.delay(tasksWaitForBind, sleep * 1000, taskId, options, cb)
+        setDelayBetweenRetries(options)
+        if body.status == 'queued' or body.status == 'preparing' or body.status == 'running'
+          _.delay(tasksWaitForBind, options.sleep * 1000, taskId, options, cb)
         else
           cb(error, body)
       else
@@ -136,13 +149,57 @@ class Client
 
   tasksWaitForLog: (taskId, options, cb) ->
     tasksWaitForLogBind = _.bind(@tasksWaitForLog, @)
-    options.sleep ?= 5
+    options.sleep ?= 0.25
+    options.tries ?= 10
+    options.tries--
+    if options.tries < 0
+      return cb(new Error('Timeout waiting for task log'), null)
 
     @tasksLog(taskId, (error, body) ->
       if error and error.message.match(/log/i)
+        setDelayBetweenRetries(options)
         _.delay(tasksWaitForLogBind, options.sleep * 1000, taskId, options, cb)
       else
         cb(error, body)
+    )
+
+  tasksWaitForSyncTaskStdout: (taskId, options, cb) ->
+    tasksWaitForSyncTaskStdoutBind = _.bind(@tasksWaitForSyncTaskStdout, @)
+    options.sleep ?= 0.25
+    options.tries ?= 10
+    options.tries--
+    if options.tries < 0
+      return cb(new Error('Timeout waiting for task stdout'), null)
+
+    @tasksStdout(taskId, (error, body) ->
+      if error and error.message.match(/log/i)
+        setDelayBetweenRetries(options)
+        _.delay(tasksWaitForSyncTaskStdoutBind, options.sleep * 1000, taskId, options, cb)
+      else
+        cb(error, body)
+    )
+
+  tasksRun: (codeName, params, options, cb) ->
+    options.sync = true
+    tasksWaitForBind = _.bind(@tasksWaitFor, @)
+    tasksWaitForSyncTaskStdoutBind = _.bind(@tasksWaitForSyncTaskStdout, @)
+
+    @tasksCreate(codeName, params, options, (error, body) ->
+      if error
+        cb(error, body)
+      else
+        task_id = body.id
+        tasksWaitForBind(task_id, {}, (error, body) ->
+          if error
+            cb(error, body)
+          else
+            tasksWaitForSyncTaskStdoutBind(task_id, {}, (error, body) ->
+              if error
+                cb(error, body)
+              else
+                cb(error, body)
+            )
+        )
     )
 
   schedulesList: (options, cb) ->
@@ -270,6 +327,10 @@ class Client
       else
         cb(error, body)
     )
+
+  setDelayBetweenRetries = (options) ->
+    if options.sleep < 60
+      options.sleep *= 2
 
 module.exports.Client = Client
 module.exports.params = helper.params
