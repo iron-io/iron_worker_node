@@ -1,6 +1,6 @@
 {
   "name": "iron_worker",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Node client for IronWorker",
   "homepage": "https://github.com/iron-io/iron_worker_node",
   "author": "Andrew Kirilenko & Iron.io, Inc",
@@ -14,7 +14,7 @@
     "adm-zip": "0.4.4"
   },
   "devDependencies": {
-    "coffee-script": "1.6.2"
+    "coffee-script": "1.12.7"
   },
   "repository": {
     "type": "git",
