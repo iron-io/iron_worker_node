@@ -87,10 +87,18 @@ class APIClient extends ironCore.Client
       parseResponseBind(error, response, body, cb)
     )
 
-  tasksCreate: (codeName, payload, options, cb) ->
+  tasksCreate: (tasks, cb) ->
     parseResponseBind = _.bind(@parseResponse, @)
 
-    @post("projects/#{@options.project_id}/tasks", {'tasks': [_.extend({'code_name': codeName, 'payload': payload}, options)]}, (error, response, body) ->
+    tasksFormatted = tasks.map (task) => _.extend(
+      {
+        code_name: task.codeName,
+        payload: if typeof(task.payload) == 'string' then task.payload else JSON.stringify(task.payload)
+      },
+      task.options
+    )
+
+    @post("projects/#{@options.project_id}/tasks", {tasks: tasksFormatted}, (error, response, body) ->
       parseResponseBind(error, response, body, cb)
     )
 

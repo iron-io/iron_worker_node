@@ -1,6 +1,6 @@
 {
   "name": "iron_worker",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Node client for IronWorker",
   "homepage": "https://github.com/iron-io/iron_worker_node",
   "author": "Andrew Kirilenko & Iron.io, Inc",
