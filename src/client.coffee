@@ -71,7 +71,7 @@ class Client
         cb(error, body)
     )
 
-  tasksCreate: (codeName, params, options, cb) ->
+  tasksCreate: (codeName, payload, options, cb) ->
     @tasksCreateBulk([{ codeName, payload, options }], cb)
 
   tasksRetry: (taskId, delay, cb) ->
