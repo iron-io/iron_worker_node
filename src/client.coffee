@@ -63,20 +63,16 @@ class Client
         cb(error, body)
     )
 
-  tasksCreate: (codeName, params, options, cb) ->
-    payload = ''
-
-    if typeof(params) == 'string'
-      payload = params
-    else
-      payload = JSON.stringify(params)
-
-    @api.tasksCreate(codeName, payload, options, (error, body) ->
+  tasksCreateBulk: (tasks, cb) ->
+    @api.tasksCreate(tasks, (error, body) ->
       if not error?
         cb(error, body.tasks[0])
       else
         cb(error, body)
     )
+
+  tasksCreate: (codeName, payload, options, cb) ->
+    @tasksCreateBulk([{ codeName, payload, options }], cb)
 
   tasksRetry: (taskId, delay, cb) ->
     @api.tasksRetry(taskId, delay, (error, body) ->
