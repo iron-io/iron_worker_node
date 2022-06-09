@@ -37,35 +37,7 @@ console.log("Hello Node World!");
 
 ## Upload code to server
 
-### Using CLI tool (preferred)
-
-* Get [CLI](http://dev.iron.io/worker/reference/cli) tool
-* Download or create `iron.json` config file with project_id/password
-* Create `HelloWorld.worker` file, example:
-
-```ruby
-runtime 'node'
-exec 'HelloWorld.js'
-```
-* Upload!
-
-```sh
-$ iron_worker upload HelloWorld
-```
-
-[.worker syntax reference](http://dev.iron.io/worker/reference/dotworker/)
-
-### Parsing payload, config within running worker
-
-* Add this library to list of dependencies (`package.json`):
-* Use it:
-
-```javascript
-var iron_worker = require('iron_worker');
-console.log(iron_worker.params());
-console.log(iron_worker.config());
-console.log(iron_worker.taskId());
-```
+See here for how to build a Node worker and upload it to Iron.io: https://github.com/iron-io/dockerworker/tree/master/node
 
 ## Worker examples
 
