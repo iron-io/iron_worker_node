@@ -1,7 +1,6 @@
 iron_worker_node is NODE.JS language binding for IronWorker.
 
 IronWorker is a massively scalable background processing system.
-[See How It Works](http://www.iron.io/products/worker/how)
 
 # Getting Started
 
@@ -12,7 +11,7 @@ IronWorker is a massively scalable background processing system.
 npm install iron_worker
 ```
 
-2\. [Setup your Iron.io credentials](http://dev.iron.io/mq/reference/configuration/)
+2\. Setup your [Iron.io credentials](http://dev.iron.io/mq/reference/configuration/)
 
 3\. Create an IronWorker Client object:
 
@@ -26,34 +25,6 @@ Or pass in credentials:
 ```javascript
 var worker = new iron_worker.Client({token: "MY_TOKEN", project_id: "MY_PROJECT_ID"});
 ```
-
-## Creating a Worker
-
-Here's an example worker:
-
-```javascript
-console.log("Hello Node World!");
-```
-
-## Upload code to server
-
-### Using CLI tool (preferred)
-
-* Get [CLI](http://dev.iron.io/worker/reference/cli) tool
-* Download or create `iron.json` config file with project_id/password
-* Create `HelloWorld.worker` file, example:
-
-```ruby
-runtime 'node'
-exec 'HelloWorld.js'
-```
-* Upload!
-
-```sh
-$ iron_worker upload HelloWorld
-```
-
-[.worker syntax reference](http://dev.iron.io/worker/reference/dotworker/)
 
 ### Parsing payload, config within running worker
 
